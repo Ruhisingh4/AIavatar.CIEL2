@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Presenter Avatar</title>
+    <style>
+        body { font-family: Arial; padding: 40px; background: #f0f0f0; }
+        #box { background: white; padding: 20px; border-radius: 10px; width: 400px; margin: auto; }
+        input, button { width: 100%; padding: 10px; margin-top: 10px; }
+        #answer { margin-top: 20px; background: #e3e3e3; padding: 10px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <h2>🎤 AI Presenter Avatar</h2>
+        <input id="question" placeholder="Ask me anything..." />
+        <button onclick="ask()">Ask</button>
+        <div id="answer"></div>
+    </div>
+
+    <script>
+        async function ask() {
+            const q = document.getElementById("question").value.trim();
+            const res = await fetch("/ask", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ question: q })
+            });
+            const data = await res.json();
+            document.getElementById("answer").innerText = data.answer;
+        }
+    </script>
+</body>
+</html>
